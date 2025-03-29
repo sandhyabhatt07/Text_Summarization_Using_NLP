@@ -1,0 +1,8 @@
+streamlit
+configparser
+bs4
+requests
+spacy_streamlit
+spacy
+en_core_web_sm
+newspaper3k
