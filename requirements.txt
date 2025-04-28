@@ -1,6 +1,6 @@
 streamlit
 spacy
-en-core-web-sm
+en-core-web-sm==3.8.0
 requests
 newspaper3k
 json
