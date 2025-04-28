@@ -1,6 +1,6 @@
-streamlit
-spacy
-en-core-web-sm==3.8.0
-newspaper3k
-requests
-spacy-streamlit
+streamlit==1.43.2
+spacy==3.8.4
+en-core-web-sm==3.8.4
+newspaper3k==0.2.8
+spacy-streamlit==0.0.1
+requests==2.25.1
