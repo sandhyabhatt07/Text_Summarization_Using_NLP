@@ -2,7 +2,7 @@ streamlit==1.44.1
 spacy==3.8.5
 spacy_streamlit==1.0.6
 newspaper3k==0.2.8
-lxml[html_clean]==4.9.2  # Add lxml with html_clean support
+lxml[html_clean]  # Add lxml with html_clean support
 requests==2.32.3
 rich==14.0.0
 markdown-it-py==3.0.0
