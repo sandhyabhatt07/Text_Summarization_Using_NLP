@@ -1,10 +1,9 @@
 streamlit==1.44.1
-configparser==7.2.0
-bs4==0.0.2
-requests==2.32.3
-spacy_streamlit==1.0.6
 spacy==3.8.5
+spacy_streamlit==1.0.6
 newspaper3k==0.2.8
+lxml==4.9.2  # Add lxml
+requests==2.32.3
 rich==14.0.0
 markdown-it-py==3.0.0
 pygments==2.19.1
