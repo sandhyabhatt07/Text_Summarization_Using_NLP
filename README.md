@@ -56,7 +56,7 @@ Fetch the latest news articles, generate smart summaries, and interactively expl
 ## 📸 Demo 
 
 
-> 🎥 Also check the ![Demo Video](assets/demo1.gif) for a full walkthrough!
+>  ![Demo Video](assets/demo1.gif) 
 
 ---
 
