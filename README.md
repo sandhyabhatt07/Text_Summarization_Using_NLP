@@ -29,7 +29,7 @@ Fetch the latest news articles, generate smart summaries, and interactively expl
 
 1. **Clone this repo**:
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
+    git clone https://github.com/sandhyabhatt07/Text_Summarization_Using_NLP.git
     cd your-repo-name
     ```
 
