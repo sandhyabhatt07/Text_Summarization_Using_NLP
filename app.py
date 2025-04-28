@@ -1,7 +1,6 @@
 import streamlit as st
 import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
-import en_core_web_sm
 from string import punctuation
 from heapq import nlargest
 import spacy_streamlit
@@ -11,7 +10,13 @@ import random
 from newspaper import Article
 
 # Load spaCy model
-nlp = en_core_web_sm.load()
+# Try to load the spaCy model, download it if necessary
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    import spacy.cli
+    spacy.cli.download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 # Stopwords and punctuation
 stopwords = list(STOP_WORDS)
