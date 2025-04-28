@@ -1,16 +1,15 @@
 import streamlit as st
 import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
+import en_core_web_sm
 from string import punctuation
 from heapq import nlargest
 import spacy_streamlit
-import en_core_web_sm
 import requests
 import json
 import random
 from newspaper import Article
 
-# Load spaCy model
 # Load spaCy model
 nlp = en_core_web_sm.load()
 
@@ -26,19 +25,57 @@ with open('config.json', 'r') as file:
 news_api_key = config.get("NEWS_API_KEY")
 
 # Function to visualize Named Entity Recognition (NER) using spacy_streamlit
+import streamlit as st
+import spacy_streamlit
+
+import streamlit as st
+import spacy
+import spacy_streamlit
+
 def spacy_rander(summary, text=None, unique_key=None):
+    nlp = spacy.load("en_core_web_sm")
     summ = nlp(summary)
+
     if text == "Yes":
-        # Visualize the full article with NER
-        rend = spacy_streamlit.visualize_ner(
-            summ, labels=nlp.get_pipe("ner").labels, title="Full Article Visualization", 
-            show_table=True, key=f"full_article_{unique_key}")  # Use unique key
+        # Only one heading
+        st.subheader("Full Article NER")
     else:
-        # Visualize the summary with NER
-        rend = spacy_streamlit.visualize_ner(
-            summ, labels=nlp.get_pipe("ner").labels, title="Summary Visualization", 
-            show_table=True, key=f"summary_{unique_key}")  # Use unique key
-    return rend
+        st.subheader("Summary NER")
+
+    # Visualize once
+    spacy_streamlit.visualize_ner(
+        summ,
+        labels=nlp.get_pipe("ner").labels,
+        title="",
+        show_table=True,
+        key=f"ner_{unique_key}"
+    )
+
+    st.markdown("---")
+
+    # 🧠 Correctly retrieve selected labels from session_state
+    selected_labels_key = f"ner_labels_ner_{unique_key}"
+    selected_labels = st.session_state.get(selected_labels_key, [])
+
+    if selected_labels:
+        for label in selected_labels:
+            st.subheader(f"Context for Label: {label}")
+            shown_sentences = set()
+
+            for ent in summ.ents:
+                if ent.label_ == label:
+                    for sent in summ.sents:
+                        if ent.text in sent.text and sent.text not in shown_sentences:
+                            st.write(f"**Entity:** {ent.text}")
+                            st.write(f"**Sentence:** {sent.text}")
+                            st.markdown("---")
+                            shown_sentences.add(sent.text)
+    # ❌ No "Select an entity" unnecessary info anymore
+
+
+
+
+
 
 # Function to calculate word frequencies (used for sentence scoring)
 def word_frequency(doc):
@@ -213,5 +250,18 @@ if title_list:
     # Visualize the summary with NER
     spacy_rander(summary, unique_key=random.randint(0, 100))
 
+    # Extract entities from the article
+    doc = nlp(article)
+    entities = [(ent.text, ent.label_) for ent in doc.ents]
+    
+    # Display a dropdown of entities
+    entity = st.selectbox("Click on an entity", [ent[0] for ent in entities])
+    
+    # Show the content where the entity is mentioned
+    if entity:
+        st.subheader(f"Context for entity: {entity}")
+        for sent in doc.sents:
+            if entity in sent.text:
+                st.write(sent.text)
 else:
     st.error("No articles found. Please try a different query or check your API key.")
